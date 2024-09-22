@@ -70,11 +70,11 @@ public class Main {
     public static void rotate2(String[][][] cube) {
         String[] temp = new String[3];
         for (int i = 0; i < 3; i++) {
-            temp[i]=cube[5][i][2];
-            cube[5][i][2] = cube[1][i][2];
-            cube[1][i][2] = cube[3][i][2];
-            cube[3][i][2] = cube[4][i][2];
-            cube[4][i][2] = temp[i] ;
+            temp[i]=cube[5][2-i][2];
+            cube[5][2-i][2] = cube[1][2-i][2];
+            cube[1][2-i][2] = cube[3][i][0];
+            cube[3][i][0] = cube[4][2-i][2];
+            cube[4][2-i][2] = temp[i] ;
         }
 
         rotateFaceClockwise(cube[2]);
@@ -83,9 +83,9 @@ public class Main {
         String[] temp = new String[3];
         for (int i = 0; i < 3; i++) {
             temp[i]=cube[5][i][0];
-            cube[5][i][0] = cube[4][i][0];
-            cube[4][i][0] = cube[3][i][0];
-            cube[3][i][0] = cube[1][i][0];
+            cube[5][i][0] = cube[4][2-i][0];
+            cube[4][2-i][0] = cube[3][2-i][2];
+            cube[3][2-i][2] = cube[1][i][0];
             cube[1][i][0] = temp[i] ;
         }
 
@@ -94,11 +94,11 @@ public class Main {
     public static void rotate5(String[][][] cube) {
         String[] temp = new String[3];
         for (int i = 0; i < 3; i++) {
-            temp[i]=cube[4][2][i];
-            cube[4][2][i] = cube[0][i][2];
+            temp[i]=cube[4][2][2-i];
+            cube[4][2][2-i] = cube[0][i][2];
             cube[0][i][2] = cube[1][0][i];
-            cube[1][0][i] = cube[2][i][0];
-            cube[2][i][0] = temp[i] ;
+            cube[1][0][i] = cube[2][2-i][0];
+            cube[2][2-i][0] = temp[i] ;
         }
 
         rotateFaceClockwise(cube[5]);
@@ -108,8 +108,8 @@ public class Main {
         for (int i = 0; i < 3; i++) {
             temp[i]=cube[5][0][i];
             cube[5][0][i] = cube[2][0][i];
-            cube[2][0][i] = cube[3][2][i];
-            cube[3][2][i] = cube[0][0][i];
+            cube[2][0][i] = cube[3][0][i];
+            cube[3][0][i] = cube[0][0][i];
             cube[0][0][i] = temp[i] ;
         }
 
@@ -120,8 +120,8 @@ public class Main {
         for (int i = 0; i < 3; i++) {
             temp[i]=cube[5][2][i];
             cube[5][2][i] = cube[0][2][i];
-            cube[0][2][i] = cube[3][0][i];
-            cube[3][0][i] = cube[2][2][i];
+            cube[0][2][i] = cube[3][2][i];
+            cube[3][2][i] = cube[2][2][i];
             cube[2][2][i] = temp[i] ;
         }
 
@@ -132,13 +132,11 @@ public class Main {
         for (int i = 0; i < 3; i++) {
             temp[i]=cube[1][2][i];
             cube[1][2][i] = cube[0][i][0];
-            cube[0][i][0] = cube[4][0][i];
-            cube[4][0][i] = cube[2][i][2];
-            cube[2][i][2] = temp[i] ;
+            cube[0][i][0] = cube[4][0][2-i];
+            cube[4][0][2-i] = cube[2][2-i][2];
+            cube[2][2-i][2] = temp[i] ;
         }
 
-        rotateFaceClockwise(cube[3]);
-        rotateFaceClockwise(cube[3]);
         rotateFaceClockwise(cube[3]);
     }
 
@@ -158,47 +156,28 @@ public class Main {
             }
         }
     }
-    public static void drawCube(String[][][] cube, int type) {
-        System.out.println("\nCube Unfolded View:");
-
-        // Верхняя грань (WHI)
-        System.out.println("       " + cubeFaceToString(cube[4]));
-
-        // Левая грань (ORA), передняя грань (GRE), правая грань (RED), задняя грань (BLU)
-        for (int i = 0; i < 3; i++) {
-            System.out.print(cubeRowToString(cube[0], i) + " ");
-            System.out.print(cubeRowToString(cube[2], i) + " ");
-            System.out.print(cubeRowToString(cube[3], i) + " ");
-            System.out.print(cubeRowToString(cube[5], i));
-            System.out.println();
+    public static void drawCube(String[][][] cube) {
+        System.out.println("\n----------------------------");
+        for (int i = 0; i <3; i++){drawLine(cube[3][i],"            ",true);}
+        for (int i = 0; i <3; i++){drawLine(cube[4][i],"            ",true);}
+        System.out.println();
+        for (int j = 0; j < 3; j++){
+            if (j>0){System.out.println();}
+            drawLine(cube[0][j],"",false);
+            drawLine(cube[5][j],"",false);
+            drawLine(cube[2][j],"",false);
         }
+        for (int j = 0; j < 3; j++){drawLine(cube[1][j],"            ",true);}
 
-        // Нижняя грань (YEL)
-        System.out.println("       " + cubeFaceToString(cube[1]));
     }
-
-    // Преобразует одну грань куба в строку для вывода
-    public static String cubeFaceToString(String[][] face) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 3; i++) {
-            sb.append(" ");
-            for (int j = 0; j < 3; j++) {
-                sb.append(face[i][j] + " ");
-            }
-            sb.append("\n       ");
+    static void drawLine(String[] side, String space,boolean doNext){
+        if (doNext){System.out.println();}
+        System.out.print(space);
+        for (int i = 0; i<3;i++){
+                System.out.print(" "+side[i]);
         }
-        return sb.toString();
     }
-
-    // Преобразует одну строку одной грани куба в строку для вывода
-    public static String cubeRowToString(String[][] face, int row) {
-        StringBuilder sb = new StringBuilder();
-        for (int j = 0; j < 3; j++) {
-            sb.append(face[row][j] + " ");
-        }
-        return sb.toString();
-    }
-    public static void drawCube(String[][][] cube){
+    public static void drawCubeDEBUG(String[][][] cube){
         System.out.println("\n----------------------------------------------------------------------------");
         for (int i = 0; i<3 ;i++){
             System.out.println();
@@ -223,6 +202,3 @@ public class Main {
         }
     }
 }
-
-
-
