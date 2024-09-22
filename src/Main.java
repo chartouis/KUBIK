@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -21,16 +22,20 @@ public class Main {
             {{"GRE", "GRE", "GRE"}, {"GRE", "GRE", "GRE"}, {"GRE", "GRE", "GRE"}},
     };
 
-
+    static ArrayList<String> solveTEMP = new ArrayList<>();
+    static ArrayList<String> solvedList = new ArrayList<>();
     public static void main(String[] args) throws InterruptedException {
-
+        boolean Autodraw = false;
         Scanner scan = new Scanner(System.in);
         boolean stopper = true;
+
         while(stopper){
+            help();
             String TEXT = scan.nextLine();
             String[] commands = TEXT.split(" ");
             String[][][] curentCube = KUBIKGREENFACE;
             for (String command : commands){
+                solveTEMP.add(command);
                 switch (command){
                     case ("L"):rotate0(curentCube);break;
                     case ("D"):rotate1(curentCube);break;
@@ -50,18 +55,16 @@ public class Main {
                     case ("B2"):rotate3(curentCube);rotate3(curentCube);break;
                     case ("U2"):rotate4(curentCube);rotate4(curentCube);break;
                     case ("F2"):rotate5(curentCube);rotate5(curentCube);break;
+                    case ("AUTO"): Autodraw = true;break;
+                    case ("HELP"):help();break;
+                    case ("DRAW"):drawCube(curentCube);break;
                     case ("STOP"):scan.close();stopper = false; break;
                     case ("RESET"):
-                        curentCube = new String[][][]{
-                                {{"ORA", "ORA", "ORA"}, {"ORA", "ORA", "ORA"}, {"ORA", "ORA", "ORA"}},
-                                {{"YEL", "YEL", "YEL"}, {"YEL", "YEL", "YEL"}, {"YEL", "YEL", "YEL"}},
-                                {{"RED", "RED", "RED"}, {"RED", "RED", "RED"}, {"RED", "RED", "RED"}},
-                                {{"BLU", "BLU", "BLU"}, {"BLU", "BLU", "BLU"}, {"BLU", "BLU", "BLU"}},
-                                {{"WHI", "WHI", "WHI"}, {"WHI", "WHI", "WHI"}, {"WHI", "WHI", "WHI"}},
-                                {{"GRE", "GRE", "GRE"}, {"GRE", "GRE", "GRE"}, {"GRE", "GRE", "GRE"}},};
+                        solve();
+                        solvedList.clear();
                         break;
                 }
-                drawCube(curentCube);
+                if (Autodraw){drawCube(curentCube);}
             }
         }
     }
@@ -157,17 +160,22 @@ public class Main {
         }
     }
     public static void drawCube(String[][][] cube) {
-        System.out.println("\n----------------------------");
-        for (int i = 0; i <3; i++){drawLine(cube[3][i],"            ",true);}
-        for (int i = 0; i <3; i++){drawLine(cube[4][i],"            ",true);}
+        System.out.println("\n---------------------------------------");
+        for (int i = 0; i <3; i++){drawLine(cube[3][i],"             ",true);}
+        System.out.println();
+        for (int i = 0; i <3; i++){drawLine(cube[4][i],"             ",true);}
+        System.out.println();
         System.out.println();
         for (int j = 0; j < 3; j++){
             if (j>0){System.out.println();}
             drawLine(cube[0][j],"",false);
+            System.out.print(" ");
             drawLine(cube[5][j],"",false);
+            System.out.print(" ");
             drawLine(cube[2][j],"",false);
         }
-        for (int j = 0; j < 3; j++){drawLine(cube[1][j],"            ",true);}
+        System.out.println();
+        for (int j = 0; j < 3; j++){drawLine(cube[1][j],"             ",true);}
 
     }
     static void drawLine(String[] side, String space,boolean doNext){
@@ -200,5 +208,41 @@ public class Main {
                 }
             }
         }
+    }
+    public static String solve(){
+
+        for (String instr : solveTEMP){
+            switch (instr){
+                case ("L"):solvedList.add("L' ");break;
+                case ("D"):solvedList.add("D' ");break;
+                case ("R"):solvedList.add("R' ");break;
+                case ("B"):solvedList.add("B' ");break;
+                case ("U"):solvedList.add("U' ");break;
+                case ("F"):solvedList.add("F' ");break;
+                case ("L'"):solvedList.add("L ");break;
+                case ("D'"):solvedList.add("D ");break;
+                case ("R'"):solvedList.add("R ");break;
+                case ("B'"):solvedList.add("B ");break;
+                case ("U'"):solvedList.add("U ");break;
+                case ("F'"):solvedList.add("F ");break;
+                case ("L2"):solvedList.add("L2 ");break;
+                case ("D2"):solvedList.add("D2 ");break;
+                case ("R2"):solvedList.add("R2 ");break;
+                case ("B2"):solvedList.add("B2 ");break;
+                case ("U2"):solvedList.add("U2 ");break;
+                case ("F2"):solvedList.add("F2 ");break;
+            }
+            solveTEMP.clear();
+        };
+        String solved = solvedList.toString();
+        return solved;
+    };
+    public static void help(){
+        System.out.println( "F: Rotate GREEN  " + "| ' :     Rotate Counter-Clockwise " + "| DRAW : Draw the cube \n" +
+                            "R: Rotate RED    " + "| 2 :     Rotate Two Times \n" +
+                            "U: Rotate WHITE  " + "| RESET : Solves the cube \n" +
+                            "B: Rotate BLUE   " + "| STOP  : Stops the program \n" +
+                            "L: Rotate ORANGE " + "| HELP  : Shows this \n" +
+                            "D: Rotate YELLOW " + "| AUTO  : Enable Auto draw");
     }
 }
