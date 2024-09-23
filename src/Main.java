@@ -15,6 +15,7 @@ public class Main {
             {{"GRE", "GRE", "GRE"}, {"GRE", "GRE", "GRE"}, {"GRE", "GRE", "GRE"}},
     };
     static String TEMP;
+    static ArrayList<String> solv = new ArrayList<>();
     static boolean solvbool = true;
     static boolean doReset = false;
     static ArrayList<String> solveTEMP = new ArrayList<>();
@@ -212,9 +213,15 @@ public class Main {
             }
         }
     }
+
     public static String solve(){
         TEMP = "";
-        List<String> solv = solveTEMP.reversed();
+        int j = 0;
+        for (int i = solveTEMP.size()-1; i >= 0; i--){
+            j ++;
+            solv.add(solveTEMP.get(i));
+        }
+
         for (String instr : solv){
             if (instr.length() < 3){
             if (instr.contains("R") || instr.contains("F") || instr.contains("U") ||

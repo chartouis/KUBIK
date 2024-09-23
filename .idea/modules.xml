@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/bezgradle.iml" filepath="$PROJECT_DIR$/bezgradle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/KUBIK.iml" filepath="$PROJECT_DIR$/KUBIK.iml" />
     </modules>
   </component>
 </project>
