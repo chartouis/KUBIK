@@ -244,12 +244,12 @@ public class Main {
         return TEMP;
     }
     public static void help(){
-        System.out.println("""
-                F: Rotate GREEN  | ' :     Rotate Counter-Clockwise           | DRAW : Draw the cube\s
-                R: Rotate RED    | 2 :     Rotate Two Times\s
-                U: Rotate WHITE  | RESET : Solves the cube'\s
-                B: Rotate BLUE   | STOP  : Stops the program\s
-                L: Rotate ORANGE | HELP  : Shows this\s
-                D: Rotate YELLOW | AUTO  : Enable/disable Auto draw""");
+        System.out.println(
+                "F: Rotate GREEN " +"| '     : Rotate Counter-Clockwise"    +       "| DRAW : Draw the cube\n" +
+                "R: Rotate RED  " + "| 2     : Rotate Two Times\n"+
+                "U: Rotate WHITE "+ "| RESET : Solves the cube'\n"+
+                "B: Rotate BLUE  " +"| STOP  : Stops the program\n"+
+                "L: Rotate ORANGE"+ "| HELP  : Shows this\n"+
+                "D: Rotate YELLOW"+ "| AUTO  : Enable/disable Auto draw);");
     }
 }
