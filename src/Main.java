@@ -31,6 +31,7 @@ public class Main {
 
             if (doReset){TEXT = solve();doReset = false;}
             else {TEXT= scan.nextLine();}
+            TEXT=TEXT.toUpperCase();
             String[] commands = TEXT.split(" ");
             String[][][] curentCube = KUBIKGREENFACE;
             for (String command : commands){
@@ -56,7 +57,7 @@ public class Main {
                     case ("AUTO"):
                                    Autodraw= !Autodraw;
                                    System.out.println("Auto draw is "+Autodraw);break;
-                    case ("HELP"):break;
+                    case ("HELP"):help();break;
                     case ("DRAW"):drawCube(curentCube);break;
                     case ("STOP"):scan.close();stopper = false;
                     case ("RESET"):
@@ -245,11 +246,11 @@ public class Main {
     }
     public static void help(){
         System.out.println(
-                "F: Rotate GREEN " +"| '     : Rotate Counter-Clockwise"    +       "| DRAW : Draw the cube\n" +
-                "R: Rotate RED  " + "| 2     : Rotate Two Times\n"+
-                "U: Rotate WHITE "+ "| RESET : Solves the cube'\n"+
-                "B: Rotate BLUE  " +"| STOP  : Stops the program\n"+
-                "L: Rotate ORANGE"+ "| HELP  : Shows this\n"+
-                "D: Rotate YELLOW"+ "| AUTO  : Enable/disable Auto draw);");
+                "F: Rotate GREEN  "+ " | '     : Rotate Counter-Clockwise"    +    "    | DRAW : Draw the cube\n" +
+                "R: Rotate RED    " +" | 2     : Rotate Two Times\n"+
+                "U: Rotate WHITE  "+ " | RESET : Solves the cube'\n"+
+                "B: Rotate BLUE   " +" | STOP  : Stops the program\n"+
+                "L: Rotate ORANGE "+ " | HELP  : Shows this\n"+
+                "D: Rotate YELLOW "+ " | AUTO  : Enable/disable Auto draw);");
     }
 }
